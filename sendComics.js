@@ -11,13 +11,15 @@ const { getFingerpori } = require('./comicApis/fingerpori');
 const TOKEN = process.env.TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
-const bot = new TelegramBot(TOKEN, { polling: true });
-const app = express();
+const bot = new TelegramBot(TOKEN, { polling: false });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log('Running on port ' + PORT);
-});
+// const bot = new TelegramBot(TOKEN, { polling: true });
+// const app = express();
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//     console.log('Running on port ' + PORT);
+// });
 
 const sendFingerpori = async () => {
     try {
