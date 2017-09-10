@@ -8,9 +8,9 @@ const HS_URL = 'http://hs.fi';
 const BASE_URL = 'http://www.hs.fi/fingerpori/';
 
 const getFingerpori = async () => {
-    // Fingerpori is published on all days except sunday (7).
+    // Fingerpori is published on all days except sunday (0).
     // Note that this doesn't take e.g. holidays into consideration.
-    if (new Date().getDay() !== 7) {
+    if (new Date().getDay() !== 0) {
         try {
             const response = await axios.get(BASE_URL);
             const $ = cheerio.load(response.data);
