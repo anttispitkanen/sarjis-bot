@@ -1,31 +1,31 @@
 /**
- * Fetch daily (Mon-Sat) Fingerpori link.
+ * Fetch daily (Mon - Fri) fok_it strips.
  */
 const cheerio = require('cheerio');
 const axios = require('axios');
 
 const HS_URL = 'http://hs.fi';
-const BASE_URL = 'http://www.hs.fi/fingerpori/';
+const FOKIT_URL = 'http://hs.fi/nyt/fokit';
 
-const getFingerpori = async () => {
-    // Fingerpori is published on all days except sunday (0).
-    // Note that this doesn't take e.g. holidays into consideration.
-    if (new Date().getDay() !== 0) {
+const getFokit = async () => {
+    // Fok_it is published Mon - Fri, so not on Sat(6) or Sun(0).
+    const day = new Date().getDay();
+    if (day !== 6 && day !== 0) {
         try {
-            const response = await axios.get(BASE_URL);
+            const response = await axios.get(FOKIT_URL);
             const $ = cheerio.load(response.data);
             const href = $('#page-main-content .cartoons ol li')
                             .first()
                             .children().first()
                             .children('a').attr('href');
-            return HS_URL + href;
+            console.log(HS_URL + href);
         } catch (e) {
             console.error(e);
-            throw Error('could not find Fingerpori');
+            throw Error('could not find Fok_it');
         }
     } else {
         return null;
     }
 }
 
-module.exports = { getFingerpori };
+module.exports = { getFokit };

@@ -7,6 +7,7 @@ const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 
 const { getFingerpori } = require('./comicApis/fingerpori');
+const { getFokit } = require('./comicApis/fok_it');
 
 const TOKEN = process.env.TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
@@ -27,6 +28,21 @@ const sendFingerpori = async () => {
     }
 }
 
+const sendFokit = async () => {
+    try {
+        const fokitLink = await getFokit();
+        if (fokitLink) {
+            console.log(fokitLink);
+            bot.sendMessage(CHAT_ID, fokitLink);
+        } else {
+            console.log('no Fok_it today');
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 (async () => {
     await sendFingerpori();
+    await sendFokit();
 })();
