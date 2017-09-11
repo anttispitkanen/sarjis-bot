@@ -12,30 +12,16 @@ const { getFokit } = require('./comicApis/fok_it');
 const TOKEN = process.env.TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
-const bot = new TelegramBot(TOKEN, { polling: false });
+const theBot = new TelegramBot(TOKEN, { polling: false });
 
-const sendFingerpori = async () => {
+const sendComic = async (comicFetcher, name, bot, chatId) => {
     try {
-        const fingerporiLink = await getFingerpori();
-        if (fingerporiLink) {
-            console.log(fingerporiLink);
-            bot.sendMessage(CHAT_ID, fingerporiLink);
+        const comicLink = await comicFetcher();
+        if (comicLink) {
+            console.log(comicLink);
+            bot.sendMessage(chatId, comicLink);
         } else {
-            console.log('no Fingerpori today');
-        }
-    } catch (e) {
-        console.error(e);
-    }
-}
-
-const sendFokit = async () => {
-    try {
-        const fokitLink = await getFokit();
-        if (fokitLink) {
-            console.log(fokitLink);
-            bot.sendMessage(CHAT_ID, fokitLink);
-        } else {
-            console.log('no Fok_it today');
+            console.log(`no ${name} today`);
         }
     } catch (e) {
         console.error(e);
@@ -43,6 +29,10 @@ const sendFokit = async () => {
 }
 
 (async () => {
-    await sendFingerpori();
-    await sendFokit();
+    try {
+        await sendComic(getFingerpori, 'Fingerpori', theBot, CHAT_ID);
+        await sendComic(getFokit, 'Fok_it', theBot, CHAT_ID);
+    } catch (e) {
+        console.error(e);
+    }
 })();
