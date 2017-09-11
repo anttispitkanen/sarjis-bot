@@ -18,7 +18,7 @@ const getFokit = async () => {
                             .first()
                             .children().first()
                             .children('a').attr('href');
-            console.log(HS_URL + href);
+            return HS_URL + href;
         } catch (e) {
             console.error(e);
             throw Error('could not find Fok_it');
