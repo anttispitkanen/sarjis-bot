@@ -2,8 +2,7 @@
  * This is the file that sends messages.
  * This is run by the Heroku scheduler once every day.
  */
-const dotenv = require("dotenv").config();
-const express = require("express");
+require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 
 const { getFingerpori } = require("./comicApis/fingerpori");
@@ -14,6 +13,13 @@ const CHAT_ID = process.env.CHAT_ID;
 
 const theBot = new TelegramBot(TOKEN, { polling: false });
 
+/**
+ *
+ * @param {() => Promise<string | null>} comicFetcher
+ * @param {string} name
+ * @param {TelegramBot} bot
+ * @param {string} chatId
+ */
 const sendComic = async (comicFetcher, name, bot, chatId) => {
   try {
     const comicLink = await comicFetcher();
