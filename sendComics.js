@@ -25,7 +25,7 @@ const sendComic = async (comicFetcher, name, bot, chatId) => {
     const comicLink = await comicFetcher();
     if (comicLink) {
       console.log(comicLink);
-      bot.sendMessage(chatId, comicLink);
+      bot.sendPhoto(chatId, comicLink);
     } else {
       console.log(`no ${name} today`);
     }

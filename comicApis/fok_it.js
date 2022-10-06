@@ -34,7 +34,6 @@ const getFokit = async () => {
 
       const imageUrlWithProtocol = `https:${imageUrlWithoutProtocol}`;
 
-      console.log(imageUrlWithProtocol);
       return imageUrlWithProtocol;
     } catch (e) {
       console.error(e);
